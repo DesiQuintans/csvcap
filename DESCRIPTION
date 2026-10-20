@@ -1,0 +1,18 @@
+Package: csvcap
+Title: Instrument-Level Import of REDCap Projects from CSVs
+Version: 0.0.0.9010
+Authors@R: 
+    person("Desi", "Quintans", , "science@desiquintans.com", role = c("aut", "cre"))
+Description: This package provides tools for importing and working with
+    REDCap projects that were exported using the "R Statistical Software"
+    export format as a flat 'CSV' file.  It provides tools for fixing REDCap's 
+	import script, separating instruments from each other, looking at the 
+	structure of those instruments, and combining instruments that have 
+	similar structures.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+Imports: 
+    cli,
+    dplyr
+Config/roxygen2/version: 8.1.1
