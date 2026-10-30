@@ -5,7 +5,8 @@
 #' format, it provides two files: A .CSV spreadsheet which is the raw data, and
 #' a .R script which imports that spreadsheet into R. In my opinion and
 #' experience, this script produces problems later in the analysis. This
-#' function loads the import script, edits it to remove these problems, and then
+#' function loads the import script, edits it to remove these problems, saves it
+#' to a temporary file in the same directory as the original, and then
 #' runs it.
 #'
 #' The specific changes this function makes to the import script are:
@@ -32,11 +33,16 @@
 #'
 #' @param path (Character) Path to the REDCap .R import script.
 #' @param na.strings (Character) Vector of values that will be interpreted as `NA`.
+#' @param cleanup (Logical) If `TRUE` (default), tries to clean up the temporary
+#'   edited REDCap import script. If `FALSE`, leaves the temporary file there so
+#'   that it can be inspected.
 #'
 #' @returns A Dataframe.
 #' @md
 #' @export
-use_redcap_import_script <- function(path, na.strings = c("", " ", "na", "NA", "N/A", "N / A", "N A", "Not Available", "[not completed]")) {
+use_redcap_import_script <- function(path,
+                                     na.strings = c("", " ", "na", "NA", "N/A", "N / A", "N A", "Not Available", "[not completed]"),
+                                     cleanup = TRUE) {
   na.strings <- deparse1(na.strings)
 
   if (!file.exists(path)) {
@@ -116,9 +122,11 @@ use_redcap_import_script <- function(path, na.strings = c("", " ", "na", "NA", "
   source(file = labels_lines_file, local = TRUE, verbose = FALSE, chdir = TRUE)
 
 
-  # 4. Clean up by deleting the temporary file.
-  file.remove(import_lines_file)
-  file.remove(labels_lines_file)
+  if (cleanup) {
+    # 4. Clean up by deleting the temporary file.
+    file.remove(import_lines_file)
+    file.remove(labels_lines_file)
+  }
 
   return(invisible(data))
 }

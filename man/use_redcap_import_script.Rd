@@ -7,13 +7,18 @@
 use_redcap_import_script(
   path,
   na.strings = c("", " ", "na", "NA", "N/A", "N / A", "N A", "Not Available",
-    "[not completed]")
+    "[not completed]"),
+  cleanup = TRUE
 )
 }
 \arguments{
 \item{path}{(Character) Path to the REDCap .R import script.}
 
 \item{na.strings}{(Character) Vector of values that will be interpreted as \code{NA}.}
+
+\item{cleanup}{(Logical) If \code{TRUE} (default), tries to clean up the temporary
+edited REDCap import script. If \code{FALSE}, leaves the temporary file there so
+that it can be inspected.}
 }
 \value{
 A Dataframe.
@@ -23,7 +28,8 @@ When you export data from REDCap using the "R Statistical Software" export
 format, it provides two files: A .CSV spreadsheet which is the raw data, and
 a .R script which imports that spreadsheet into R. In my opinion and
 experience, this script produces problems later in the analysis. This
-function loads the import script, edits it to remove these problems, and then
+function loads the import script, edits it to remove these problems, saves it
+to a temporary file in the same directory as the original, and then
 runs it.
 }
 \details{
