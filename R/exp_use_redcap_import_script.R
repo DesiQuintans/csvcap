@@ -82,8 +82,8 @@ use_redcap_import_script <- function(path,
   # right in front of the HALT()ed version.
   import_lines <-
     gsub(
-      pattern     = 'read.csv\\(\\"(.*?)\\"',
-      replacement = sprintf('read.csv("\\1", na.strings = %s); HALT(', na.strings),
+      pattern     = 'read.csv\\(("|\')(.*?)("|\')',
+      replacement = sprintf('read.csv("\\2", na.strings = %s); HALT(', na.strings),
       x           = import_lines,
       fixed       = FALSE
     )
