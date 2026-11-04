@@ -7,14 +7,31 @@
 
 <!-- badges: end -->
 
-This package provides tools for importing and working with REDCap
-projects that were exported using the “R Statistical Software” export
-format (i.e. as a flat ‘CSV’ file paired with a REDCap-generated R
-script for R).
+By [one estimate](https://youtu.be/_RXM5N-3g3M?si=l7VqClrBGCWhB4fa), a 
+REDCap project can come in at least 18 different permutations of arms, 
+events, forms, and so on. This is because each instrument can be presented
+to different sets of people at different timepoints, either repeating or
+not repeating, and for different purposes (e.g. a participant survey
+versus a back-of-office form used only by study staff). When we download 
+the project as a CSV, all of that variation gets packed down into a single 
+flat spreadsheet, with all of the timepoints and instruments mixed together.
 
-It provides functions for fixing REDCap’s import script, separating
-instruments from each other, looking at the structure of those
-instruments, and combining instruments that have similar structures.
+I believe that the best way to handle all of this variety is to split the
+dataset into individual instruments so that each one can be cleaned and
+understood separately. Once the instruments are ready, they can be re-assembled 
+in ways that make sense for your analysis. For example, I like to have 3 
+dataframes per project:
+
+1.  The main one-row-per-person dataset. Everything that was asked only
+    once per person goes here. This is used for descriptive statistics.
+2.  A scheduled-repeats dataset, where each row is a person+timepoint
+    and each column is a variable from a scheduled repeating instrument,
+    e.g. 1-year follow-up, 2-year follow-up, etc. This is useful for
+    modelling, especially time-varying modelling.
+3.  An unscheduled-repeats dataset, where repeating instruments that
+    were collected without a fixed schedule go.
+
+This package provides tools to encourage and automate this kind of workflow.
 
 ## Installation
 
@@ -38,25 +55,6 @@ pak::pak("DesiQuintans/csvcap")
 | `join_instruments()` | Join instruments together. |
 
 # Example
-
-The idea behind `csvcap` is to split the large REDCap dataset into
-individual instruments. This is because each instrument can be presented
-to different sets of people at different timepoints, either repeating or
-not repeating, and for different purposes (e.g. a participant survey
-versus a back-of-office form used only by study staff).
-
-Once the instruments are separated, they can be individually cleaned and
-then re-joined in ways that make sense for your analysis. For example, I
-like to have 3 dataframes per project:
-
-1.  The main one-row-per-person dataset. Everything that was asked only
-    once per person goes here. This is used for descriptive statistics.
-2.  A scheduled-repeats dataset, where each row is a person+timepoint
-    and each column is a variable from a scheduled repeating instrument,
-    e.g. 1-year follow-up, 2-year follow-up, etc. This is useful for
-    modelling, especially time-varying modelling.
-3.  An unscheduled-repeats dataset, where repeating instruments that
-    were collected without a fixed schedule go.
 
 ## Step 1. Import the data
 
