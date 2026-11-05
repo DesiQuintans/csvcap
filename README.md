@@ -11,10 +11,11 @@ By [one estimate](https://youtu.be/_RXM5N-3g3M?si=l7VqClrBGCWhB4fa), a
 REDCap project can come in at least 18 different permutations of arms, 
 events, forms, and so on. This is because each instrument can be presented
 to different sets of people at different timepoints, either repeating or
-not repeating, and for different purposes (e.g. a participant survey
-versus a back-of-office form used only by study staff). When we download 
-the project as a CSV, all of that variation gets packed down into a single 
-flat spreadsheet, with all of the timepoints and instruments mixed together.
+not repeating, on a fixed schedule or opportunistically, and for different 
+purposes (e.g. a participant survey versus a back-of-office form used only by 
+study staff). When we download the project as a CSV, all of that variation 
+gets packed down into a single flat spreadsheet, with all of the timepoints 
+and instruments mixed together.
 
 I believe that the best way to handle all of this variety is to split the
 dataset into individual instruments so that each one can be cleaned and
